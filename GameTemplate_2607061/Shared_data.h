@@ -9,7 +9,6 @@
 #include <vector>
 
 class Entity;
-class Enemy;
 
 class Shared_data
 {
