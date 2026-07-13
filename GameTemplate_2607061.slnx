@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GameTemplate_2607061/GameTemplate_2607061.vcxproj" />
+</Solution>
