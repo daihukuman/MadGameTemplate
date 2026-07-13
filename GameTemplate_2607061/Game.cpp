@@ -11,6 +11,11 @@ bool Pausing = false;
 
 Game::Game(HINSTANCE hInstance, ID2D1Factory* facto) : hInst(hInstance), factory(facto) {
 
+#pragma region Referenceassignment
+	Shared_data::Entities = Shared_data::p_Entities;
+	Shared_data::Window = Shared_data::p_Window;
+#pragma endregion
+
 	WNDCLASSW wc{};
 
 	if (!GetClassInfoW(hInstance, L"GameWnd", &wc)) {
@@ -25,14 +30,14 @@ Game::Game(HINSTANCE hInstance, ID2D1Factory* facto) : hInst(hInstance), factory
 
 	DWriteCreateFactory(
 		DWRITE_FACTORY_TYPE_SHARED,
-		__uuidof(data.WriteFactory),
-		reinterpret_cast<IUnknown**>(&data.WriteFactory)
+		__uuidof(Shared_data::DWrite::p_WriteFactory),
+		reinterpret_cast<IUnknown**>(&Shared_data::DWrite::p_WriteFactory)
 	);
 
 }
 
 Game::~Game() {
-	for (Entity* entity : data.Entities) {
+	for (Entity* entity : Shared_data::Entities) {
 		delete entity;
 	}
 	factory->Release();
@@ -43,10 +48,10 @@ Game::~Game() {
 
 void Game::Activate() {
 
-	ma_engine_init(NULL, &data.engine);
+	ma_engine_init(NULL, &Shared_data::Sound::p_engine);
 	
-	data.MSGothic = PaiUtil::CreateTextFormat(
-		data.WriteFactory,
+	Shared_data::DWrite::p_MSGothic = PaiUtil::CreateTextFormat(
+		Shared_data::DWrite::p_WriteFactory,
 		L"MS UI gothic",
 		24.f
 	);
@@ -114,7 +119,7 @@ LRESULT CALLBACK Game::GameProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	switch (msg)
 	{
 	case WM_CREATE:
-		game->data.Window = hWnd;
+		Shared_data::Window = hWnd;
 		break;
 	case WM_KEYDOWN:
 	{

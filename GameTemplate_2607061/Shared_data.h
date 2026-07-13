@@ -10,23 +10,49 @@
 
 class Entity;
 
-class Shared_data
-{
+class Shared_data {
+	friend class Game;
+
+	static std::vector<Entity*> p_Entities;
+	static HWND p_Window;
+
 public:
+	static std::vector<Entity*> &Entities;
+	static HWND &Window;
 
-	bool Lbutton = false;
-	bool RButton = false;
+	class Input {
+		friend class Game;
+		static bool p_keys[256];
+	public:
+		class Mouse {
+			friend class Game;
 
-	IDWriteFactory* WriteFactory = nullptr;
-	IDWriteTextFormat* MSGothic = nullptr;
+			static bool p_Lbutton;
+			static bool p_RButton;
+		public:
+			static const bool& LButton;
+			static const bool& RButton;
+		};
 
-	bool keys[256] = {};
+		static const bool(&keys)[256];
 
-	std::vector<Entity*> Entities = {};
+	};
+	class DWrite {
+		friend class Game;
 
-	HWND Window = NULL;
+		static IDWriteFactory* p_WriteFactory;
+		static IDWriteTextFormat* p_MSGothic;
+	public:
+		static const IDWriteFactory*& WriteFactory;
+		static const IDWriteTextFormat*& MSGothic;
+	};
+	class Sound {
+		friend class Game;
 
-	ma_engine engine;
+		static ma_engine p_engine;
+	public:
+		static const ma_engine& engine;
+	};
 
 };
 

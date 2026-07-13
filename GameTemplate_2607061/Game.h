@@ -30,14 +30,11 @@ class Game
 	HINSTANCE hInst;
 	HRESULT CreateGraphicResource();
 
-	Shared_data data;
-
 public:
 
 	HWND ParentWnd;
 	HWND GameWnd;
 	
-
 	Game(HINSTANCE hInstance, ID2D1Factory* factory);
 	~Game();
 

@@ -14,7 +14,6 @@ protected:
 
 	HINSTANCE hInst;
 	ID2D1HwndRenderTarget** target = nullptr;
-	Shared_data *data = nullptr;
 
 public:
 
