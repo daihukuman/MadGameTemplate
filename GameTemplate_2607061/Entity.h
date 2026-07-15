@@ -7,6 +7,8 @@
 #include "resource.h"
 #include "Shared_data.h"
 
+#include "Sprite.h"
+
 class Entity
 {
 
@@ -17,7 +19,7 @@ protected:
 
 public:
 
-	ID2D1Bitmap* Sprite = nullptr;
+	Sprite EntitySprite;
 
 	float x = 0.f;
 	float y = 0.f;
@@ -26,7 +28,7 @@ public:
 
 	Entity();
 
-	void Spawn(ID2D1HwndRenderTarget** Rendertarget, HINSTANCE hInstance, Shared_data *dataset);
+	void Spawn(HINSTANCE hInstance);
 	virtual void Activate();
 
 	void LoadSprite(int ResourceID, const wchar_t *ResourceType);

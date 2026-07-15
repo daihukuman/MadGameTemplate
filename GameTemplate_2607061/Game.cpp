@@ -11,11 +11,6 @@ bool Pausing = false;
 
 Game::Game(HINSTANCE hInstance, ID2D1Factory* facto) : hInst(hInstance), factory(facto) {
 
-#pragma region Referenceassignment
-	Shared_data::Entities = Shared_data::p_Entities;
-	Shared_data::Window = Shared_data::p_Window;
-#pragma endregion
-
 	WNDCLASSW wc{};
 
 	if (!GetClassInfoW(hInstance, L"GameWnd", &wc)) {
@@ -41,14 +36,14 @@ Game::~Game() {
 		delete entity;
 	}
 	factory->Release();
-	target->Release();
+	Shared_data::Rendertarget->Release();
 	brush->Release();
 	white->Release();
 }
 
 void Game::Activate() {
 
-	ma_engine_init(NULL, &Shared_data::Sound::p_engine);
+	ma_engine_init(NULL, &Shared_data::Sound::engine);
 	
 	Shared_data::DWrite::p_MSGothic = PaiUtil::CreateTextFormat(
 		Shared_data::DWrite::p_WriteFactory,
@@ -64,24 +59,24 @@ HRESULT Game::CreateGraphicResource() {
 	RECT rect;
 	GetClientRect(GameWnd, &rect);
 
-	if (!target) {
+	if (!Shared_data::Rendertarget) {
 		hr = factory->CreateHwndRenderTarget(
 			D2D1::RenderTargetProperties(),
 			D2D1::HwndRenderTargetProperties(
 				GameWnd,
 				D2D1::SizeU(rect.right - rect.left, rect.bottom - rect.top)
 			),
-			&target
+			&Shared_data::Rendertarget
 		);
-		if (target) {
+		if (Shared_data::Rendertarget) {
 			if (SUCCEEDED(hr)) {
-				hr = target->CreateSolidColorBrush(
+				hr = Shared_data::Rendertarget->CreateSolidColorBrush(
 					D2D1::ColorF(D2D1::ColorF::Black),
 					&brush
 				);
 			}
 			if (SUCCEEDED(hr)) {
-				hr = target->CreateSolidColorBrush(
+				hr = Shared_data::Rendertarget->CreateSolidColorBrush(
 					D2D1::ColorF(D2D1::ColorF::White),
 					&white
 				);
@@ -119,36 +114,36 @@ LRESULT CALLBACK Game::GameProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	switch (msg)
 	{
 	case WM_CREATE:
-		Shared_data::Window = hWnd;
+		Shared_data::p_Window = hWnd;
 		break;
 	case WM_KEYDOWN:
 	{
-		game->data.keys[wp] = true;
+		Shared_data::Input::p_keys[wp] = true;
 	}
 	break;
 	case WM_KEYUP:
 	{
-		game->data.keys[wp] = false;
+		Shared_data::Input::p_keys[wp] = false;
 	}
 	break;
 	case WM_LBUTTONDOWN:
 	{
-		game->data.Lbutton = true;
+		Shared_data::Input::Mouse::p_LButton = true;
 	}
 	break;
 	case WM_LBUTTONUP:
 	{
-		game->data.Lbutton = false;
+		Shared_data::Input::Mouse::p_LButton = false;
 	}
 	break;
 	case WM_RBUTTONDOWN:
 	{
-		game->data.RButton = true;
+		Shared_data::Input::Mouse::p_RButton = true;
 	}
 	break;
 	case WM_RBUTTONUP:
 	{
-		game->data.RButton = false;
+		Shared_data::Input::Mouse::p_RButton = false;
 	}
 	break;
 	case WM_PAINT:
@@ -168,11 +163,11 @@ LRESULT CALLBACK Game::GameProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	break;
 	case WM_SIZE:
 	{
-		if (game && game->target) {
+		if (game && Shared_data::Rendertarget) {
 			UINT width = LOWORD(lp);
 			UINT height = HIWORD(lp);
 
-			game->target->Resize(D2D1::SizeU(width, height));
+			Shared_data::Rendertarget->Resize(D2D1::SizeU(width, height));
 
 		}
 	}
@@ -189,24 +184,24 @@ void Game::Render() {
 
 	if (Pausing) { return; }
 
-	target->BeginDraw();
+	Shared_data::Rendertarget->BeginDraw();
 
-	target->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+	Shared_data::Rendertarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
 
-	for (Entity* ents : data.Entities) {
+	for (Entity* ents : Shared_data::p_Entities) {
 		if (ents) {
 			ents->Render();
 		}
 	}
 
-	target->EndDraw();
+	Shared_data::Rendertarget->EndDraw();
 
 }
 
 void Game::Think(const float deltatime) {
 
 	if (!Pausing) {
-		for (Entity* ents : data.Entities) {
+		for (Entity* ents : Shared_data::p_Entities) {
 			if (ents) {
 				ents->Think(deltatime);
 			}

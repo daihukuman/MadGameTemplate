@@ -17,8 +17,11 @@ class Shared_data {
 	static HWND p_Window;
 
 public:
-	static std::vector<Entity*> &Entities;
-	static HWND &Window;
+
+	static ID2D1HwndRenderTarget* Rendertarget;
+
+	inline const static std::vector<Entity*> &Entities = p_Entities;
+	inline const static HWND &Window = p_Window;
 
 	class Input {
 		friend class Game;
@@ -27,14 +30,14 @@ public:
 		class Mouse {
 			friend class Game;
 
-			static bool p_Lbutton;
+			static bool p_LButton;
 			static bool p_RButton;
 		public:
-			static const bool& LButton;
-			static const bool& RButton;
+			inline static const bool& LButton = p_LButton;
+			inline static const bool& RButton = p_RButton;
 		};
 
-		static const bool(&keys)[256];
+		inline static const bool *keys = p_keys;
 
 	};
 	class DWrite {
@@ -43,15 +46,13 @@ public:
 		static IDWriteFactory* p_WriteFactory;
 		static IDWriteTextFormat* p_MSGothic;
 	public:
-		static const IDWriteFactory*& WriteFactory;
-		static const IDWriteTextFormat*& MSGothic;
+		inline static const IDWriteFactory*& WriteFactory = p_WriteFactory;
+		inline static const IDWriteTextFormat*& MSGothic = p_MSGothic;
 	};
 	class Sound {
 		friend class Game;
-
-		static ma_engine p_engine;
 	public:
-		static const ma_engine& engine;
+		static ma_engine& engine;
 	};
 
 };

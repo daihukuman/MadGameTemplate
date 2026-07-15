@@ -2,10 +2,12 @@
 
 #include "miniaudio.h"
 
+#include "Shared_data.h"
+
 #include <string>
 #include <format>
 
-void MediaUtil::CreateSoundFromMemory(ma_engine& engine,const void* pData, int size, ma_decoder *decoder, ma_sound* sound) {
+void MediaUtil::CreateSoundFromMemory(const void* pData, int size, ma_decoder *decoder, ma_sound* sound) {
 
     if (pData && decoder) {
 
@@ -22,7 +24,7 @@ void MediaUtil::CreateSoundFromMemory(ma_engine& engine,const void* pData, int s
         }
 
         result = ma_sound_init_from_data_source(
-            &engine,
+            &Shared_data::Sound::engine,
             decoder,
             0,
             nullptr,
