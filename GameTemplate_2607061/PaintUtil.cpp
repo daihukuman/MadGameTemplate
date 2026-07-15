@@ -1,10 +1,11 @@
 #include "PaintUtil.h"
 #include <wincodec.h>
+#include "Shared_data.h"
 
 namespace fs = std::filesystem;
 
 namespace PaiUtil {
-	ID2D1Bitmap* GetBitmapFromFilename(fs::path filepath, ID2D1HwndRenderTarget*& renderTarget) {
+	ID2D1Bitmap* GetBitmapFromFilename(fs::path filepath) {
 		IWICImagingFactory* wic = nullptr;
 		CoCreateInstance(
 			CLSID_WICImagingFactory,
@@ -34,7 +35,7 @@ namespace PaiUtil {
 		);
 
 		ID2D1Bitmap* bitmap = nullptr;
-		renderTarget->CreateBitmapFromWicBitmap(
+		Shared_data::Rendertarget->CreateBitmapFromWicBitmap(
 			convert,
 			NULL,
 			&bitmap
@@ -53,7 +54,7 @@ namespace PaiUtil {
 
 	}
 
-	ID2D1Bitmap* GetBitmapFromResource(HINSTANCE hInst, ID2D1HwndRenderTarget*& renderTarget, int resourceID, const wchar_t *resourceType) {
+	ID2D1Bitmap* GetBitmapFromResource(HINSTANCE hInst, int resourceID, const wchar_t *resourceType) {
 		IWICImagingFactory* wic = nullptr;
 		CoCreateInstance(
 			CLSID_WICImagingFactory,
@@ -91,7 +92,7 @@ namespace PaiUtil {
 		);
 
 		ID2D1Bitmap* bitmap = nullptr;
-		renderTarget->CreateBitmapFromWicBitmap(
+		Shared_data::Rendertarget->CreateBitmapFromWicBitmap(
 			convert,
 			NULL,
 			&bitmap

@@ -3,15 +3,12 @@
 Entity::Entity() {};
 
 void Entity::LoadSprite(int ResourceID, const wchar_t *ResourceType) {
-	if (target && hInst) {
-		Sprite = PaiUtil::GetBitmapFromResource(
-			hInst,
-			*target,
-			ResourceID,
-			ResourceType
+	if (EntitySprite && hInst) {
+		EntitySprite.LoadSpriteFromResource(
+			hInst, ResourceID, ResourceType
 		);
 
-		D2D1_SIZE_F size = Sprite->GetSize();
+		D2D1_SIZE_F size = EntitySprite.GetSprite()->GetSize();
 
 		Width = size.width;
 		Height = size.height;
@@ -21,17 +18,16 @@ void Entity::LoadSprite(int ResourceID, const wchar_t *ResourceType) {
 
 void Entity::LoadSpriteFromFile(const wchar_t *FilePath) {
 	if (target) {
-		Sprite = PaiUtil::GetBitmapFromFilename(
-			FilePath,
-			*target
+		EntitySprite.SetSprite(
+			PaiUtil::GetBitmapFromFilename(
+				FilePath
+			)
 		);
 	}
 }
 
-void Entity::Spawn(ID2D1HwndRenderTarget** Rendertarget, HINSTANCE hInstance, Shared_data* dataset) {
+void Entity::Spawn(HINSTANCE hInstance) {
 	hInst = hInstance;
-	target = Rendertarget;
-	data = dataset;
 	Activate();
 }
 
