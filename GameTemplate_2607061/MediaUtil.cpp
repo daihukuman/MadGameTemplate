@@ -44,7 +44,7 @@ void MediaUtil::CreateSoundFromMemory(const void* pData, int size, ma_decoder *d
     }
 }
 
-void MediaUtil::CreateSoundFromFile(ma_engine& engine, const wchar_t* filepath, ma_sound* sound) {
+void MediaUtil::CreateSoundFromFile(const wchar_t* filepath, ma_sound* sound) {
 
      int size = WideCharToMultiByte(
         CP_UTF8,
@@ -71,7 +71,7 @@ void MediaUtil::CreateSoundFromFile(ma_engine& engine, const wchar_t* filepath, 
     );
 
     ma_sound_init_from_file(
-        &engine,
+        &Shared_data::Sound::engine,
         result.c_str(),
         0,
         NULL,

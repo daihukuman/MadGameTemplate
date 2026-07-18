@@ -13,25 +13,25 @@ class Entity;
 class Shared_data {
 	friend class Game;
 
-	static std::vector<Entity*> p_Entities;
-	static HWND p_Window;
+	inline static std::vector<Entity*> p_Entities = {};
+	inline static HWND p_Window = NULL;
 
 public:
 
-	static ID2D1HwndRenderTarget* Rendertarget;
+	inline static ID2D1HwndRenderTarget* Rendertarget = nullptr;
 
 	inline const static std::vector<Entity*> &Entities = p_Entities;
 	inline const static HWND &Window = p_Window;
 
 	class Input {
 		friend class Game;
-		static bool p_keys[256];
+		inline static bool p_keys[256] = {};
 	public:
 		class Mouse {
 			friend class Game;
 
-			static bool p_LButton;
-			static bool p_RButton;
+			inline static bool p_LButton = false;
+			inline static bool p_RButton = false;
 		public:
 			inline static const bool& LButton = p_LButton;
 			inline static const bool& RButton = p_RButton;
@@ -41,18 +41,13 @@ public:
 
 	};
 	class DWrite {
-		friend class Game;
-
-		static IDWriteFactory* p_WriteFactory;
-		static IDWriteTextFormat* p_MSGothic;
 	public:
-		inline static const IDWriteFactory*& WriteFactory = p_WriteFactory;
-		inline static const IDWriteTextFormat*& MSGothic = p_MSGothic;
+		inline static IDWriteFactory* WriteFactory = nullptr;
+		inline static const IDWriteTextFormat* MSGothic = nullptr;
 	};
 	class Sound {
-		friend class Game;
 	public:
-		static ma_engine& engine;
+		inline static ma_engine engine{};
 	};
 
 };

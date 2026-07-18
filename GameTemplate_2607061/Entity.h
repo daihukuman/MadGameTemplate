@@ -15,7 +15,6 @@ class Entity
 protected:
 
 	HINSTANCE hInst;
-	ID2D1HwndRenderTarget** target = nullptr;
 
 public:
 
@@ -30,9 +29,6 @@ public:
 
 	void Spawn(HINSTANCE hInstance);
 	virtual void Activate();
-
-	void LoadSprite(int ResourceID, const wchar_t *ResourceType);
-	void LoadSpriteFromFile(const wchar_t* FilePath);
 
 	virtual void Think(const float deltatime);
 	virtual void Render();

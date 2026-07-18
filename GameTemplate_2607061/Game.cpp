@@ -25,8 +25,8 @@ Game::Game(HINSTANCE hInstance, ID2D1Factory* facto) : hInst(hInstance), factory
 
 	DWriteCreateFactory(
 		DWRITE_FACTORY_TYPE_SHARED,
-		__uuidof(Shared_data::DWrite::p_WriteFactory),
-		reinterpret_cast<IUnknown**>(&Shared_data::DWrite::p_WriteFactory)
+		__uuidof(Shared_data::DWrite::WriteFactory),
+		reinterpret_cast<IUnknown**>(&Shared_data::DWrite::WriteFactory)
 	);
 
 }
@@ -45,8 +45,8 @@ void Game::Activate() {
 
 	ma_engine_init(NULL, &Shared_data::Sound::engine);
 	
-	Shared_data::DWrite::p_MSGothic = PaiUtil::CreateTextFormat(
-		Shared_data::DWrite::p_WriteFactory,
+	Shared_data::DWrite::MSGothic = PaiUtil::CreateTextFormat(
+		Shared_data::DWrite::WriteFactory,
 		L"MS UI gothic",
 		24.f
 	);
