@@ -22,8 +22,6 @@ public:
 
 	float x = 0.f;
 	float y = 0.f;
-	float Width = 0.f;
-	float Height = 0.f;
 
 	Entity();
 

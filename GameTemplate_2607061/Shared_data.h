@@ -49,6 +49,5 @@ public:
 	public:
 		inline static ma_engine engine{};
 	};
-
 };
 
