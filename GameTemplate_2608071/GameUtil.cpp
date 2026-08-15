@@ -14,5 +14,5 @@ D2D1_POINT_2F GameUtil::GetCursorPosition(bool isScreen, HWND Window) {
 }
 
 D2D1_POINT_2F GameUtil::GetEntityCenter(const Entity* ent) {
-	return D2D1::Point2F(ent->x + (ent->Width * 0.5f), ent->y + (ent->Height * 0.5f));
+	return D2D1::Point2F(ent->x + (ent->EntitySprite.Width * 0.5f), ent->y + (ent->EntitySprite.Height * 0.5f));
 }
